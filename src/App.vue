@@ -3,13 +3,28 @@
 
   export default {
     data() {
+      let todos = [];
+      const jsonData = localStorage.getItem('todos') || [];
+
+      try {
+        todos = JSON.parse(jsonData);
+      } catch(e) {}
+      
       return {
         todos,
-        title: ','
+        title: ''
       }
     },
-    mounted() {
-      console.log(this.todos);
+    // mounted() {
+    //   console.log(this.todos);
+    // },
+    watch: {
+      todos: {
+        deep: true,
+        handler() {
+          localStorage.setItem('todos', JSON.stringify(this.todos));
+        },
+      }
     },
     computed: {
       activeTodos() {
