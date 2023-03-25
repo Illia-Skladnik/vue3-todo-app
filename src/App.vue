@@ -6,6 +6,9 @@
       return {
         todos,
       }
+    },
+    mounted() {
+      console.log(this.todos);
     }
   }
 </script>
@@ -29,7 +32,7 @@
 
       <section class="todoapp__main">
         <div
-          v-for="todo of todos"
+          v-for="todo, index of todos"
           :key="todo.id"
           class="todo"
           :class="{ completed: todo.completed }"
@@ -38,7 +41,7 @@
             <input
               type="checkbox"
               class="todo__status"
-              :checked="todo.completed"
+              v-model="todo.completed"
             />
           </label>
 
@@ -53,7 +56,12 @@
 
           <template v-else>
             <span class="todo__title">{{ todo.title }}</span>
-            <button class="todo__remove">x</button>
+            <button 
+              @click="todos.splice(index, 1)"
+              class="todo__remove"
+            >
+              x
+            </button>
           </template>
 
 
